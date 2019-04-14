@@ -6,57 +6,68 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      latitude: null,
-      longitude: null,
-      data: null,
+      town: '',
+      country: '',
+      icon: '',
+      temperature: '',
+      clouds: '',
+      fullContent: '',
       err: null
     }
     this.getLocation = this.getLocation.bind(this);
-    this.fetchData = this.fetchData.bind(this);
 
   }
   componentDidMount() {
     this.getLocation();
   }
-  fetchData() {
-    const {latitude, longitude} = this.state;
-    axios.get(`https://fcc-weather-api.glitch.me/api/current?lat=${latitude}&lon=${longitude}`)
-          .then(res => {
-            const resData = {...res.data};
-            this.setState({
-              data: {...resData}
-            })
-          })
-          .catch(err => err);
-  }
   getLocation() {
     navigator.geolocation.watchPosition((position) => {
-      this.setState({
-         longitude: position.coords.longitude,
-         latitude: position.coords.latitude,
-      })
+      const longitude = position.coords.longitude,
+            latitude = position.coords.latitude;
+      setInterval(() => {
+        axios.get(`https://fcc-weather-api.glitch.me/api/current?lat=${latitude}&lon=${longitude}`)
+        .then(res => {
+          this.setState({
+            town: res.data.name,
+            country: res.data.sys.country,
+            icon: res.data.weather[0].icon,
+            temperature: res.data.main.temp,
+            clouds: res.data.weather[0].description,
+            fullContent: JSON.stringify(res, '', 4)
+          })
+        })
+        .catch(err => err);
+      }, 5000);
+      
     });
   }
   render() {
-    const {data} = this.state;
+    const {town} = this.state;
     return (
       <div className="app">
-        Simple weather app!
-        <button onClick={() => this.fetchData()}>
-          Fetch data
-        </button>
-        <header>
-            {data ? data.weather.map((item,index) => {
-              return (
-                <div key={item.id}>
-                  <p>{item.main}</p>
-                  <img src={item.icon} alt={item.main}/>
-                  <p>{item.description}</p>
-                </div>
-              );
-            }): 'Get your data'}
+        <header className="app-title">
+          Weather on {new Date().toLocaleString()}
         </header>
+        {town ? 
+        <div className="app-main">
+          <div className="app-main__title">
+            {this.state.town},
+            {this.state.country}
+          </div>
+          <div className="app-main__content">
+            <div className="app-main__content-main">
+              <div>{this.state.temperature}<sup>o</sup>C </div>
+              <div>{this.state.clouds}</div>
+              <img src={this.state.icon} />
+            </div>
+            <div className="app-main__content-additional">
+              
+            </div>
+          </div>
+        </div>
+        : 'Getting data...Please wait'}
       </div>
+      
     );
   }
 }
