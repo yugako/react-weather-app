@@ -58,10 +58,11 @@ class App extends Component {
             <div className="app-main__content-main">
               <div>{this.state.temperature}<sup>o</sup>C </div>
               <div>{this.state.clouds}</div>
-              <img src={this.state.icon} />
+              <img src={this.state.icon} alt='Weather'/>
             </div>
             <div className="app-main__content-additional">
-              
+              {this.state.town},
+            {this.state.country}
             </div>
           </div>
         </div>
