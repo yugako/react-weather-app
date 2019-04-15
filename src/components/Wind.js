@@ -1,12 +1,14 @@
 import React from 'react';
 
 const Wind = ({speed, deg}) => {
-  return (
+	const arrowStyle = {
+		transform: `rotate(${deg}deg)`,
+	};
+  	return (
     <div className='wind'>
-      Wind speed:
-      {speed},
-      Wind direction:
-      {deg}
+      	Wind speed: {speed} m/s,
+      	<div style={arrowStyle}>&#8593;</div>
+      	
     </div>
   );
 };

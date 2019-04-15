@@ -21,6 +21,9 @@ class App extends Component {
   componentDidMount() {
     this.getLocation();
   }
+  componentWillUpdate() {
+    this.getLocation();
+  }
   getLocation() {
     navigator.geolocation.watchPosition((position) => {
       const longitude = position.coords.longitude,
@@ -42,8 +45,7 @@ class App extends Component {
           })
         })
         .catch(err => err);
-      
-      
+        console.log('clicked')
     });
   }
   render() {
@@ -69,7 +71,7 @@ class App extends Component {
           </div>
           : err ? 'Ooops...something went wrong :(' : 'Getting data...Please wait'}
           </div>
-          <button className='button' onClick={() => this.getLocation()}>Refresh data</button>
+          <button className='button' onClick={this.getLocation}>Refresh data</button>
       </div>
       
     );
