@@ -8,4 +8,4 @@ const ContentTitle = ({town, country}) => {
   );
 };
 
-export default AppTitle;
+export default ContentTitle;

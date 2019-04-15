@@ -3,7 +3,8 @@ import React from 'react';
 const AppTitle = () => {
   return (
     <header className="app-title">
-        Weather on {new Date().toLocaleString()}
+        Weather <br /> 
+        Current time: {new Date().toLocaleString()}
     </header>
   );
 };

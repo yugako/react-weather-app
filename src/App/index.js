@@ -14,11 +14,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullContent: '',
       err: null
     }
     this.getLocation = this.getLocation.bind(this);
-
   }
   componentDidMount() {
     this.getLocation();
@@ -27,27 +25,29 @@ class App extends Component {
     navigator.geolocation.watchPosition((position) => {
       const longitude = position.coords.longitude,
             latitude = position.coords.latitude;
+
       axios.get(`https://fcc-weather-api.glitch.me/api/current?lat=${latitude}&lon=${longitude}`)
-      .then(res => {
-        this.setState({
-          town: res.data.name,
-          country: res.data.sys.country,
-          icon: res.data.weather[0].icon,
-          temperature: res.data.main.temp,
-          clouds: res.data.weather[0].description,
-          humidity: res.data.main.humidity,
-          pressure: res.data.main.pressure,
-          windSpeed: res.data.wind.speed,
-          windDeg: res.data.wind.deg,
-          fullContent: JSON.stringify(res, '', 4)
+        .then(res => {
+          this.setState({
+            town: res.data.name,
+            country: res.data.sys.country,
+            icon: res.data.weather[0].icon,
+            temperature: res.data.main.temp,
+            clouds: res.data.weather[0].description,
+            humidity: res.data.main.humidity,
+            pressure: res.data.main.pressure,
+            windSpeed: res.data.wind.speed,
+            windDeg: res.data.wind.deg,
+            fullContent: JSON.stringify(res, '', 4)
+          })
         })
-      })
-      .catch(err => err);
+        .catch(err => err);
+      
       
     });
   }
   render() {
-    const {town, country, icon, temperature, clouds, humidity, pressure, windSpeed, windDeg} = this.state;
+    const {town, country, icon, temperature, clouds, humidity, pressure, windSpeed, windDeg, err} = this.state;
     return (
       <div className="app">
         <AppTitle />
@@ -67,8 +67,9 @@ class App extends Component {
               </div>
             </div>
           </div>
-          : 'Getting data...Please wait'}
+          : err ? 'Ooops...something went wrong :(' : 'Getting data...Please wait'}
           </div>
+          <button className='button' onClick={() => this.getLocation()}>Refresh data</button>
       </div>
       
     );

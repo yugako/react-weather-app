@@ -2,9 +2,16 @@ import React from 'react';
 
 const Clouds = ({clouds, icon}) => {
   return (
-    <div className='clouds'>
-      Clouds: {clouds}
-      <img src={icon} alt=''/>
+  	<div>
+  		<div className='clouds'>
+  		  Clouds: {clouds}
+  		</div>
+  		{
+  			icon ? 
+  			<img src={icon} alt=''/>
+  			: ''
+  		}
+	    
     </div>
   );
 };
