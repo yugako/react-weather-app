@@ -1,9 +1,9 @@
 import React from 'react';
 
-const ContentTitle = ({town, country}) => {
+const ContentTitle = ({location}) => {
   return (
     <div className="app-main__title">
-      Location: {town}, {country}
+      Location: {location}
     </div>
   );
 };

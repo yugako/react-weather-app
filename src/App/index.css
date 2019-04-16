@@ -49,4 +49,18 @@
 	margin-left: 5px;
 }
 
+.searchLocations {
+	position: relative;
+}
+
+.searchLocations-list {
+	/*position: absolute;*/
+	list-style: none;
+	background-color: #fff;
+	padding: 15px;
+	color: #000;
+	width: 500px;
+	margin: auto;
+}
+
 
