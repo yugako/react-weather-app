@@ -14,39 +14,45 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      latitude: '',
+      longitude: '',
       err: null
     }
     this.getLocation = this.getLocation.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+
   }
   componentDidMount() {
     this.getLocation();
+    this.fetchData();
   }
-  componentWillUpdate() {
-    this.getLocation();
+  fetchData() {
+    const {latitude, longitude} = this.state;
+    axios.get(`https://fcc-weather-api.glitch.me/api/current?lat=${latitude}&lon=${longitude}`)
+      .then(res => {
+        this.setState({
+          town: res.data.name,
+          country: res.data.sys.country,
+          icon: res.data.weather[0].icon,
+          temperature: res.data.main.temp,
+          clouds: res.data.weather[0].description,
+          humidity: res.data.main.humidity,
+          pressure: res.data.main.pressure,
+          windSpeed: res.data.wind.speed,
+          windDeg: res.data.wind.deg,
+          fullContent: JSON.stringify(res, '', 4)
+        })
+      })
+      .catch(err => this.setState({err}));
   }
   getLocation() {
     navigator.geolocation.watchPosition((position) => {
-      const longitude = position.coords.longitude,
-            latitude = position.coords.latitude;
-
-      axios.get(`https://fcc-weather-api.glitch.me/api/current?lat=${latitude}&lon=${longitude}`)
-        .then(res => {
-          this.setState({
-            town: res.data.name,
-            country: res.data.sys.country,
-            icon: res.data.weather[0].icon,
-            temperature: res.data.main.temp,
-            clouds: res.data.weather[0].description,
-            humidity: res.data.main.humidity,
-            pressure: res.data.main.pressure,
-            windSpeed: res.data.wind.speed,
-            windDeg: res.data.wind.deg,
-            fullContent: JSON.stringify(res, '', 4)
-          })
-        })
-        .catch(err => err);
-        console.log('clicked')
+      this.setState({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude
+      })   
     });
+    
   }
   render() {
     const {town, country, icon, temperature, clouds, humidity, pressure, windSpeed, windDeg, err} = this.state;
@@ -71,7 +77,7 @@ class App extends Component {
           </div>
           : err ? 'Ooops...something went wrong :(' : 'Getting data...Please wait'}
           </div>
-          <button className='button' onClick={this.getLocation}>Refresh data</button>
+          <button className='button' onClick={this.fetchData}>Refresh data</button>
       </div>
       
     );

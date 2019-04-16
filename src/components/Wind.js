@@ -6,8 +6,8 @@ const Wind = ({speed, deg}) => {
 	};
   	return (
     <div className='wind'>
-      	Wind speed: {speed} m/s,
-      	<div style={arrowStyle}>&#8593;</div>
+      	Wind: {speed} m/s,
+      	<span style={arrowStyle}>&#8593;</span>
       	
     </div>
   );

@@ -44,14 +44,9 @@
 	color: #fff;
 	font-weight: bold;
 }
-
-.wind {
-	display: -webkit-flex;
-	display: -moz-flex;
-	display: -ms-flex;
-	display: -o-flex;
-	display: flex;
-	justify-content: space-between;
+.wind span {
+	display: inline-block;
+	margin-left: 5px;
 }
 
 
