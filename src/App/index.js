@@ -15,103 +15,72 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      latitude: '',
-      longitude: '',
       location: '',
       locations: [],
       hideList: true,
-      err: null
+      err: null,
+      show: 'none',
     }
-    this.getLocation = this.getLocation.bind(this);
     this.fetchData = this.fetchData.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.setLocation = this.setLocation.bind(this);
-    this.openWeather = this.openWeather.bind(this);
+    this.request = this.request.bind(this);
+
   }
   componentDidMount() {
-    this.getLocation();
     this.fetchData();
-    this.openWeather();
   }
   fetchData() {
-    const {latitude, longitude} = this.state;
-    axios.get(`https://fcc-weather-api.glitch.me/api/current?lat=${latitude}&lon=${longitude}`)
-      .then(res => {
-        this.setState({
-          location: `${res.data.name},${res.data.sys.country}`,
-          icon: res.data.weather[0].icon,
-          temperature: res.data.main.temp,
-          clouds: res.data.weather[0].description,
-          humidity: res.data.main.humidity,
-          pressure: res.data.main.pressure,
-          windSpeed: res.data.wind.speed,
-          windDeg: res.data.wind.deg,
-          fullContent: JSON.stringify(res, '', 4)
-        })
-      })
-      .catch(err => this.setState({err}));
-  }
-  openWeather() {
-    const {latitude, longitude} = this.state;
-    console.log(latitude, longitude)
-
-    axios.get(`http://api.apixu.com/v1/search.json?key=e4c6948631f64f6f921180503191704&q=${latitude},${longitude}`)
-      .then(res => console.log(res));
-  }
-  getLocation() {
     navigator.geolocation.watchPosition((position) => {
-      this.setState({
-        longitude: position.coords.longitude,
-        latitude: position.coords.latitude
-      })   
+      const lat = position.coords.latitude,
+            lon = position.coords.longitude;
+      this.request(lat, lon);
     });
     
   }
-  setLocation(lat, lon, location) {
-    this.setState({
-      latitude: lat,
-      longitude: lon,
-      location: location
-    });
-
-    this.fetchData(this.state.latitude, this.state.longitude);
+  request(lat, lon) {
+    axios.get(`http://api.apixu.com/v1/current.json?key=e4c6948631f64f6f921180503191704&q=${lat},${lon}`)
+      .then(res => {
+        this.setState({
+          location: `${res.data.location.name},${res.data.location.region},${res.data.location.country}`,
+          icon: res.data.current.condition.icon,
+          temperature: res.data.current.temp_c,
+          clouds: res.data.current.condition.text,
+          humidity: res.data.current.humidity,
+          pressure: res.data.current.pressure,
+          windSpeed: res.data.current.wind_kph,
+          windDeg: res.data.current.wind_degree,
+        });
+        console.log(res.data)
+      })
+      .catch(err => this.setState({err}));   
+  }
+  setLocation(lat, lon, name) {
+    this.request(lat, lon);
+    this.setState({show: 'none', location: name}); 
   }
   handleChange(event) {
     this.setState({
-      location: event.target.value,
+      show: 'block'
     });
-    axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${this.state.location}&key=695e6abb53304853b60733e670acf97a`)
-      .then(res => this.setState({locations: res.data.results}))
+    let location = event.target.value;
+    axios.get(`http://api.apixu.com/v1/search.json?key=e4c6948631f64f6f921180503191704&q=${location}&lang=uk`)
+      .then(res => this.setState({locations: res.data}))
       .catch(err => err);
   } 
   render() {
-    const {location, icon, temperature, clouds, humidity, pressure, windSpeed, windDeg, err} = this.state;
-    const locations = this.state.locations.slice(0,5);
+    const {location, icon, temperature, clouds, humidity, pressure, windSpeed, windDeg, err, show} = this.state;
+    const locations = this.state.locations;
     return (
       <div className="app">
         <AppTitle />
         <div>
-          {/*<div className='searchLocations'>
-            <input onChange={this.handleChange} value={this.state.location} type='text' />
-            {locations ? 
-               <ul hidden={} className='searchLocations-list'>
-                {
-                  locations.map((loc) => {
-                  const lat = loc.geometry.lat,
-                        lon = loc.geometry.lng,
-                        currentLocation = loc.formatted
-                  return (<li key={loc.formatted} onClick={() => this.setLocation(lat, lon, currentLocation)}>{loc.formatted}</li>);
-                }) }
-              </ul>
-              : ''
-            }
-           
-          </div>*/}
           <SearchLocation 
             handleChange={this.handleChange}
             location={location}
             locations={locations}
             handleClick={this.setLocation}
+            show={show}
           />
           {location ? 
           <div className="app-main">
