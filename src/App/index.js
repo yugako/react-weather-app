@@ -26,10 +26,12 @@ class App extends Component {
     this.fetchData = this.fetchData.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.setLocation = this.setLocation.bind(this);
+    this.openWeather = this.openWeather.bind(this);
   }
   componentDidMount() {
     this.getLocation();
     this.fetchData();
+    this.openWeather();
   }
   fetchData() {
     const {latitude, longitude} = this.state;
@@ -48,6 +50,13 @@ class App extends Component {
         })
       })
       .catch(err => this.setState({err}));
+  }
+  openWeather() {
+    const {latitude, longitude} = this.state;
+    console.log(latitude, longitude)
+
+    axios.get(`http://api.apixu.com/v1/search.json?key=e4c6948631f64f6f921180503191704&q=${latitude},${longitude}`)
+      .then(res => console.log(res));
   }
   getLocation() {
     navigator.geolocation.watchPosition((position) => {
