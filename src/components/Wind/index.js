@@ -6,7 +6,7 @@ const Wind = ({speed, deg}) => {
 	};
   	return (
     <div className='wind'>
-      	Wind: {speed} m/s,
+      	Вітер: {speed} m/s,
       	<span style={arrowStyle}>&#8593;</span>
       	
     </div>

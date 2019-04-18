@@ -3,7 +3,7 @@ import React from 'react';
 const Humidy = ({humidity}) => {
   return (
     <div className='humidity'>
-      Humidy: {humidity} %
+      Вологість: {humidity} %
     </div>
   );
 };

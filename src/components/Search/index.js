@@ -1,9 +1,12 @@
 import React from 'react';
+import './index.css';
 
 const SearchLocation = ({handleChange, location, locations, handleClick, show}) => {
 	return (
 		<div className='searchLocations'>
-            <input onChange={handleChange} value={location} type='text' />
+            <label className='searchLocations-label' htmlFor='s'>Дізнайтесь погоду у вашому місті:
+            </label>
+            <input id='s' onChange={handleChange} value={location} className='searchLocations-input' type='text' />
             {locations ? 
                <ul style={{display: show}} className='searchLocations-list'>
                 {
@@ -11,7 +14,7 @@ const SearchLocation = ({handleChange, location, locations, handleClick, show}) 
                   return (
                     <li 
                       key={loc.id} 
-                      onClick={() => handleClick(loc.lat, loc.lon, loc.name)}
+                      onClick={() => handleClick(loc.lat, loc.lon)}
                     >{loc.name}
                     </li>
                   );

@@ -3,12 +3,12 @@ import React from 'react';
 const Clouds = ({clouds, icon}) => {
   return (
   	<div>
-  		<div className='clouds'>
-  		  Clouds: {clouds}
+  		<div className='sky'>
+  		  Небо: {clouds}
   		</div>
   		{
   			icon ? 
-  			<img src={icon} alt=''/>
+  			<img className='sky-img' src={icon} alt=''/>
   			: ''
   		}
 	    
