@@ -1,3 +1,8 @@
+:root {
+	--accent: #757575;
+	--light: #fff;
+}
+
 body,html {
 	height: 100%;
 	width: 100%;
@@ -6,7 +11,7 @@ body,html {
 body {
 	margin: 0;
 	padding: 0;
-	background-image: url('./bg_n.jpg');
+	background-image: url('./bg_d.jpg');
 	-webkit-background-size: cover;
 	background-size: cover;
 	background-attachment: fixed;
@@ -39,12 +44,14 @@ body {
 }*/
 
 .app {
-	color: #fff;
+	color: var(--light);
 }
 
 .app-main {
 	padding: 20px;
 	border-radius: 20px;
+	background-color: var(--light);
+	color: #000;
 
 }
 .app-main__content {
@@ -54,6 +61,9 @@ body {
 	display: -o-flex;
 	display: flex;
 	justify-content: space-between;
+	-ms-align-items: center;
+	align-items: center;
+	font-family: Lora;
 }
 
 .app-main__content-main {
@@ -68,4 +78,7 @@ body {
 
 .bold {
 	font-weight: bold;
+}
+.grey {
+	color: var(--accent);
 }

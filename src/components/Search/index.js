@@ -13,7 +13,8 @@ const SearchLocation = ({handleChange, location, locations, handleClick, show}) 
                   locations.map((loc) => {
                   return (
                     <li 
-                      key={loc.id} 
+                      key={loc.id}
+                      className='searchLocations-list__item' 
                       onClick={() => handleClick(loc.lat, loc.lon)}
                     >{loc.name}
                     </li>

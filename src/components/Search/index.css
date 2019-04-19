@@ -1,12 +1,14 @@
 .searchLocations {
 	margin-bottom: 10px;
+	position: relative;
 }
 
 .searchLocations-input {
 	padding: 7px 15px;
+	box-sizing: border-box;
 	width: 100%;
 	font-size: 16px;
-	color: #757575;
+	color: var(--accent);
 }
 
 .searchLocations-input:focus {
@@ -19,4 +21,24 @@
 	font-size: 17px;
 	font-weight: bold;
 	font-family: 'Merriweather';
+}
+
+.searchLocations-list {
+	list-style: none;
+	background-color: var(--light);
+	color: #000;
+	padding: 10px;
+	margin-top: 0px;
+	max-height: 150px;
+	overflow-y: auto;
+	font-family: Lora;
+	position: absolute;
+	width: 100%;
+	max-width: 576px;
+	box-sizing: border-box;
+
+}
+
+.searchLocations-list__item {
+	padding: 10px;
 }
