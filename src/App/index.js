@@ -9,14 +9,14 @@ import Temperature from '../components/Temperature';
 import Pressure from '../components/Pressure';
 import Sky from '../components/Sky';
 import Search from '../components/Search';
+import Err from '../components/Error';
+import Loading from '../components/Loading';
+import Days from '../components/Days'
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: '',
-      currentLocation: '',
-      locations: [],
       hideList: true,
       err: null,
       show: 'none',
@@ -45,6 +45,8 @@ class App extends Component {
         this.setState({
           location,
           currentLocation: location,
+          last_updated: res.data.current.last_updated,
+          precip: res.data.current.precip_mm,
           icon: res.data.current.condition.icon,
           celsius: res.data.current.temp_c,
           fahrenheit: res.data.current.temp_f,
@@ -53,14 +55,14 @@ class App extends Component {
           pressure: res.data.current.pressure_mb,
           windSpeed: res.data.current.wind_kph,
           windDeg: res.data.current.wind_degree,
+          days: res.data.forecast.forecastday
         });
-        console.log(res)
       })
       .catch(err => this.setState({err}));   
   }
   setLocation(lat, lon) {
     this.request(lat, lon);
-    this.setState({show: 'none'}); 
+    this.setState({show: 'none'});
   }
   handleChange(event) {
     this.setState({
@@ -72,8 +74,10 @@ class App extends Component {
       .catch(err => this.setState({err}));
   } 
   render() {
-    const {location, currentLocation, icon, celsius, fahrenheit, clouds, humidity, pressure, windSpeed, windDeg, err, show} = this.state;
+    const {location, currentLocation, last_updated, precip, icon, celsius, fahrenheit, clouds, humidity, pressure, windSpeed, windDeg, err, show} = this.state;
     const locations = this.state.locations;
+    const days = this.state.days;
+
     return (
       <div className="app">
         <div>
@@ -86,7 +90,7 @@ class App extends Component {
           />
           {location ? 
           <div className="app-main">
-            <Title location={location} />
+            <Title location={location} updated={last_updated}/>
             
             <div className="app-main__content">
               <div className="app-main__content-main">
@@ -95,16 +99,18 @@ class App extends Component {
                   celsius={celsius}
                   fahrenheit={fahrenheit} 
                 />
-                
               </div>
               <div className="app-main__content-additional">
-                <Humidy humidity={humidity} />
+                <Humidy humidity={humidity} precip={precip}/>
                 <Pressure pressure={pressure} />
                 <Wind speed={windSpeed} deg={windDeg} />
               </div>
             </div>
+            <Days days={days} />
           </div>
-          : err ? 'От халепа...щось пішло не так :(' : 'Отримання даних...Будь ласка зачекайте'}
+          : err 
+          ? <Err message={'От халепа...щось пішло не так :('} />
+          : <Loading message={'Отримання даних...Будь ласка зачекайте'} />}
           </div>
       </div>
       
