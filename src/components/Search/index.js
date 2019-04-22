@@ -11,14 +11,14 @@ const SearchLocation = ({handleChange, location, locations, handleClick, show}) 
                <ul style={{display: show}} className='searchLocations-list'>
                 {
                   locations.map((loc) => {
-                  return (
-                    <li 
-                      key={loc.id}
-                      className='searchLocations-list__item' 
-                      onClick={() => handleClick(loc.lat, loc.lon)}
-                    >{loc.name}
-                    </li>
-                  );
+                    return (
+                      <li 
+                        key={loc.id}
+                        className='searchLocations-list__item' 
+                        onClick={() => handleClick(loc.lat, loc.lon)}
+                      >{loc.name}
+                      </li>
+                    );
                 })}
               </ul>
               : null

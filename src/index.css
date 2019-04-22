@@ -27,7 +27,7 @@ body {
 }
 
 #root {
-	max-width: 768px;
+	max-width: 992px;
 	width: 100%;
 	padding: 10px;
 }
@@ -48,7 +48,6 @@ body {
 	display: -ms-flex;
 	display: -o-flex;
 	display: flex;
-	justify-content: space-between;
 	-ms-align-items: center;
 	align-items: center;
 	font-family: Lora;
@@ -67,6 +66,7 @@ body {
 .app-main__content-additional {
 	color: var(--accent);
 	font-size: 16px;
+	margin-left: 20px;
 }
 
 .bold {
