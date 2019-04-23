@@ -22,6 +22,7 @@ class App extends Component {
 	this.handleChange = this.handleChange.bind(this);
 	this.setLocation = this.setLocation.bind(this);
 	this.request = this.request.bind(this);
+	this.seeDay = this.seeDay.bind(this);
   }
   componentDidMount() {
 	this.fetchData();
@@ -35,7 +36,7 @@ class App extends Component {
 	
   }
   request(lat, lon) {
-	axios.get(`http://api.apixu.com/v1/forecast.json?key=e4c6948631f64f6f921180503191704&q=${lat},${lon}&days=5&lang=uk`)
+	axios.get(`http://api.apixu.com/v1/forecast.json?key=e4c6948631f64f6f921180503191704&q=${lat},${lon}&days=7`)
 	  .then(res => {
 		const location = `${res.data.location.name},${res.data.location.region},${res.data.location.country}`;
 		this.setState({
@@ -48,9 +49,7 @@ class App extends Component {
 		  fahrenheit: res.data.current.temp_f,
 		  clouds: res.data.current.condition.text,
 		  humidity: res.data.current.humidity,
-		  pressure: res.data.current.pressure_mb,
 		  windSpeed: res.data.current.wind_kph,
-		  windDeg: res.data.current.wind_degree,
 		  days: res.data.forecast.forecastday
 		});
 	  })
@@ -64,6 +63,19 @@ class App extends Component {
 	this.request(lat, lon);
 	this.setState({show: 'none'});
   }
+  seeDay(day) {
+  	let curDay = day.day;
+  	this.setState({
+  		precip: curDay.totalprecip_in,
+  		icon: curDay.condition.icon,
+  		celsius: curDay.avgtemp_c,
+  		fahrenheit: curDay.avgtemp_f,
+  		clouds: curDay.condition.text,
+  		humidity: curDay.avghumidity,
+  		windSpeed: curDay.maxwind_kph,
+  		last_updated: day.date
+  	})
+  }
   handleChange(event) {
 	this.setState({
 	  show: 'block',
@@ -74,7 +86,7 @@ class App extends Component {
 	  .catch(err => this.setState({err}));
   } 
   render() {
-	const {location, currentLocation, last_updated, precip, icon, celsius, fahrenheit, clouds, humidity, pressure, windSpeed, windDeg, err, show} = this.state;
+	const {location, currentLocation, last_updated, precip, icon, celsius, fahrenheit, clouds, humidity, windSpeed, err, show} = this.state;
 	const locations = this.state.locations;
 	const days = this.state.days;
 
@@ -89,23 +101,24 @@ class App extends Component {
 		  	/>
 		  	{location ? 
 		  	<section className="app-main">
-				<Title location={location} updated={last_updated}/>
-				<Content 
-					clouds={clouds} 
-					icon={icon} 
-					celsius={celsius} 
-					fahrenheit={fahrenheit} 
-					humidity={humidity} 
-					precip={precip} 
-					pressure={pressure} 
-					windSpeed={windSpeed} 
-					windDeg={windDeg}
-				/>
-				<Days days={days} />
+		  		<article>
+		  			<Title location={location} updated={last_updated}/>
+		  			<Content 
+		  				clouds={clouds} 
+		  				icon={icon} 
+		  				celsius={celsius} 
+		  				fahrenheit={fahrenheit} 
+		  				humidity={humidity} 
+		  				precip={precip} 
+		  				windSpeed={windSpeed} 
+		  			/>
+		  		</article>
+				
+				<Days days={days} clickHandler={this.seeDay}/>
 		  	</section>
 		  	: err 
-		  	? <Err message={'От халепа...щось пішло не так :('} />
-		  	: <Loading message={'Отримання даних...Будь ласка зачекайте'} />}
+		  	? <Err message={'Ooops...something went wrong :('} />
+		  	: <Loading message={'Fetching data...please wait'} />}
 	  	</main>  
 	);
   }

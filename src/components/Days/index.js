@@ -5,16 +5,16 @@ import Sky from '../Sky';
 
 import './index.css';
 
-const Days = ({days}) => {
+const Days = ({days, clickHandler}) => {
 	return (
 		<div className='days'>
 			{days.map(day => {
 				return (
-					<div key={day.date_epoch} className='day'>
-						<div className='grey bold'>{moment(day.date).format('MMMM Do')}</div>
+					<div key={day.date_epoch}  className='day'>
+						<div  className='grey bold day-date' onClick={() => clickHandler(day)}>{moment(day.date).format('MMMM Do')}</div>
 						<div className='day-main'>
 							<Sky clouds={day.day.condition.text} icon={day.day.condition.icon} />
-							<Temperature celsius={day.day.avgtemp_c} fahrenheit={day.day.avgtemp_f} />
+							<Temperature className='day-temperature' celsius={day.day.maxtemp_c} fahrenheit={day.day.maxtemp_f} />
 						</div>
 					</div>
 				);

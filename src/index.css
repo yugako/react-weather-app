@@ -42,16 +42,6 @@ body {
 	color: #000;
 
 }
-.app-main__content {
-	display: -webkit-flex;
-	display: -moz-flex;
-	display: -ms-flex;
-	display: -o-flex;
-	display: flex;
-	-ms-align-items: center;
-	align-items: center;
-	font-family: Lora;
-}
 
 .app-main__content-main {
 	display: -webkit-flex;
@@ -74,4 +64,10 @@ body {
 }
 .grey {
 	color: var(--accent);
+}
+
+@media (max-width: 768px) {
+	.app-main {
+		display: block;
+	}
 }

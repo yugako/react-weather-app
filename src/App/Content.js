@@ -2,7 +2,7 @@ import React from 'react';
 import MainContent from './MainContent';
 import AdditionalContent from './AdditionalContent';
 
-const Content = ({clouds, icon, celsius, fahrenheit, humidity, precip, pressure, windSpeed, windDeg}) => {
+const Content = ({clouds, icon, celsius, fahrenheit, humidity, precip, windSpeed}) => {
 	return (
 		<div className="app-main__content">
 	  		<MainContent 
@@ -13,10 +13,8 @@ const Content = ({clouds, icon, celsius, fahrenheit, humidity, precip, pressure,
 	  		/>
 	  		<AdditionalContent 
 	  			humidity={humidity} 
-	  			precip={precip} 
-	  			pressure={pressure} 
+	  			precip={precip}  
 	  			windSpeed={windSpeed} 
-	  			windDeg={windDeg} 
 	  		/>
 		</div>
 	);

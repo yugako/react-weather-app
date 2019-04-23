@@ -1,4 +1,18 @@
-.temp-value {
+.temp {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	-ms-align-items: flex-end;
+	align-items: flex-end;
+}
+
+.temp-value, .measures {
 	font-size: 18px;
 	color: var(--accent);
+}
+
+.measures span {
+	cursor: pointer;
 }

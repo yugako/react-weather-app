@@ -4,7 +4,7 @@ import './index.css';
 const SearchLocation = ({handleChange, location, locations, handleClick, show}) => {
 	return (
 		<div className='searchLocations'>
-            <label className='searchLocations-label' htmlFor='s'>Дізнайтесь погоду у вашому місті:
+            <label className='searchLocations-label' htmlFor='s'>Discover your city weather:
             </label>
             <input id='s' onChange={handleChange} value={location} className='searchLocations-input' type='text' />
             {locations ? 

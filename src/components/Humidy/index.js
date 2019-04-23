@@ -4,10 +4,10 @@ const Humidy = ({humidity, precip}) => {
   return (
   	<div>
 	    <div className='humidity'>
-	      Вологість: {humidity} %
+	      Humidy: {humidity} %
 	    </div>
 	    <div className='precip'>
-	      Опади: {precip} мм
+	      Precips: {precip} мм
 	    </div>
     </div>
   );
