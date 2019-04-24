@@ -19,10 +19,10 @@ const Temperature = ({celsius, fahrenheit}) => {
       	<span ref={tempValue} className='bold grey'>{celsius}</span>
       </div>
       <div className='measures' onClick={setValue}>
-        <span data-temp='celsius'>
+        <span className='mark' data-temp='celsius'>
           <sup>o</sup>C
-        </span> |
-        <span data-temp='fahrenheit'>
+        </span>
+        <span className='mark' data-temp='fahrenheit'>
           F
         </span>
       </div>  

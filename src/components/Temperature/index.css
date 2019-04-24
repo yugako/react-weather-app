@@ -16,3 +16,16 @@
 .measures span {
 	cursor: pointer;
 }
+
+.mark + .mark::before {
+	content: '|';
+	margin: auto 5px;
+}
+
+@media (max-width: 768px) {
+	.temp {
+		justify-content: center;
+		margin-bottom: 10px;
+	}
+}
+

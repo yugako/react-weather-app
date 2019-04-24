@@ -115,10 +115,14 @@ class App extends Component {
 		  		</article>
 				
 				<Days days={days} clickHandler={this.seeDay}/>
+				<div className='info'>
+					<sup>*</sup>Click on the date to see more details
+				</div>
 		  	</section>
 		  	: err 
 		  	? <Err message={'Ooops...something went wrong :('} />
 		  	: <Loading message={'Fetching data...please wait'} />}
+
 	  	</main>  
 	);
   }

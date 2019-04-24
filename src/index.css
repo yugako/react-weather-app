@@ -4,14 +4,12 @@
 }
 
 body,html {
-	height: 100%;
 	width: 100%;
 }
 
 body {
 	margin: 0;
 	padding: 0;
-	background-image: url('./bg_n.jpg');
 	-webkit-background-size: cover;
 	background-size: cover;
 	background-attachment: fixed;
@@ -37,7 +35,8 @@ body {
 
 .app-main {
 	padding: 20px;
-	border-radius: 20px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 	background-color: var(--light);
 	color: #000;
 
@@ -69,5 +68,14 @@ body {
 @media (max-width: 768px) {
 	.app-main {
 		display: block;
+	}
+	.app-main__content-main {
+		display: block;
+		text-align: center;
+	}
+	.app-main__content-additional {
+		margin-left: 0;
+		text-align: center;
+		margin-bottom: 10px;
 	}
 }

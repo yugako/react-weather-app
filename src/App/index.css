@@ -8,3 +8,14 @@
 	align-items: center;
 	font-family: Lora;
 }
+
+.info {
+	color: var(--accent);
+	margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+	.app-main__content {
+		display: block;
+	}
+}

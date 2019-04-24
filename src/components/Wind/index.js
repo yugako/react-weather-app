@@ -3,7 +3,7 @@ import React from 'react';
 const Wind = ({speed}) => {
   	return (
     <div className='wind'>
-      	Вітер: {speed} м/с     	
+      	Wind: {speed} m/s   	
     </div>
   );
 };

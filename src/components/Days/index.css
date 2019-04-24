@@ -4,10 +4,11 @@
 	display: -ms-flex;
 	display: -o-flex;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	background-color: var(--light);
 	-ms-align-items: stretch;
 	align-items: stretch;
+	flex-wrap: wrap;
 }
 
 .days img {
@@ -16,7 +17,8 @@
 }
 
 .day {
-	flex-basis: 25%;
+	flex-basis: 14%;
+	margin-bottom: 10px;
 }
 
 .day-date {
@@ -27,4 +29,25 @@
 .day-temperature {
 	-ms-align-self: flex-end;
 	align-self: flex-end;
+}
+
+@media (max-width: 992px) {
+	.day-main .sky {
+		text-align: center;
+	}
+}
+
+@media (max-width: 768px) {
+	.day {
+		flex-basis: 25%;
+	}
+	.day-date {
+		text-align: center;
+	}
+}
+
+@media (max-width: 576px) {
+	.day {
+		flex-basis: 50%;
+	}
 }

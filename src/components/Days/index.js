@@ -11,10 +11,10 @@ const Days = ({days, clickHandler}) => {
 			{days.map(day => {
 				return (
 					<div key={day.date_epoch}  className='day'>
-						<div  className='grey bold day-date' onClick={() => clickHandler(day)}>{moment(day.date).format('MMMM Do')}</div>
+						<div className='grey bold day-date' onClick={() => clickHandler(day)}>{moment(day.date).format('MMMM Do')}</div>
 						<div className='day-main'>
-							<Sky clouds={day.day.condition.text} icon={day.day.condition.icon} />
-							<Temperature className='day-temperature' celsius={day.day.maxtemp_c} fahrenheit={day.day.maxtemp_f} />
+							<Sky clouds={day.day.condition.text} icon={day.day.condition.icon} showText={false}/>
+							<Temperature className='day-temperature' celsius={day.day.avgtemp_c} fahrenheit={day.day.avgtemp_f} />
 						</div>
 					</div>
 				);
